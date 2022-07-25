@@ -15,8 +15,27 @@ const getMe = async (req, res, next) => {
   }
 };
 
-const updateMe = (req, res, next) => {
-
+const updateMe = async (req, res, next) => {
+  const userId = req.user.payload;
+  const {
+    email, name
+  } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { email, name },
+      { new: true, runValidators: true },
+    );
+    if (!user) {
+      throw new Error();
+    }
+    res.status(200).send({
+      email: user.email,
+      name: user.name,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const createUser = async (req, res, next) => {
@@ -46,7 +65,6 @@ const createUser = async (req, res, next) => {
       .send({
         email: createdUser.email,
         name: createdUser.name,
-        id: createdUser.id,
       });
   } catch (error) {
     next(error);
@@ -72,7 +90,6 @@ const login = (req, res, next) => {
         .send({
           email: user.email,
           name: user.name,
-          id: user.id,
         });
     })
     .catch((error) => next(error));
