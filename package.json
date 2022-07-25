@@ -1,0 +1,36 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Backend for Diploma MoviesDB project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pictdesign/movies-explorer-api.git"
+  },
+  "author": "Stas Vokhmyanin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pictdesign/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/pictdesign/movies-explorer-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.6",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "nodemon": "^2.0.19"
+  }
+}
