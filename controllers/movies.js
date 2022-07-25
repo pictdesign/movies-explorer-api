@@ -49,6 +49,9 @@ const deleteMovie = async (req, res, next) => {
       if (!movie) {
         throw new Error();
       }
+      if (movie.owner._id.toString() !== req.user.payload) {
+        throw new Error();
+      }
       return movie.remove()
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
         .catch((error) => next(error));

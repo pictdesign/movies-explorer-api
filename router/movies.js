@@ -23,21 +23,9 @@ router.post('/', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required()
-      .custom((value, helper) => {
-        if (isURL(value)) return value;
-        return helper.message('Некорректные данные');
-      }),
-    trailerLink: Joi.string().required()
-      .custom((value, helper) => {
-        if (isURL(value)) return value;
-        return helper.message('Некорректные данные');
-      }),
-    thumbNail: Joi.string().required()
-      .custom((value, helper) => {
-        if (isURL(value)) return value;
-        return helper.message('Некорректные данные');
-      }),
+    image: Joi.string().required().custom(checkUrl),
+    trailerLink: Joi.string().required().custom(checkUrl),
+    thumbNail: Joi.string().required().custom(checkUrl),
     owner: Joi.string().required(),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
