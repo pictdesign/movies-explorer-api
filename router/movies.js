@@ -39,12 +39,12 @@ router.post('/', celebrate({
         return helper.message('Некорректные данные');
       }),
     owner: Joi.string().required(),
-    id: Joi.number().required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEn: Joi.string().required(),
   }),
 }), createMovie);
 
-router.delete('/:id', deleteMovie);
+router.delete('/:movieId', deleteMovie);
 
 module.exports = router;
