@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const rateLimiter = require('./utils/ratelimiter');
 const router = require('./routers/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -12,6 +14,8 @@ mongoose.connect(DATABASE, {
   useNewUrlParser: true,
 });
 
+app.use(helmet());
+app.use(rateLimiter);
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(bodyParser.json());
