@@ -2,10 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/movies');
+router.get('/');
 
-router.post('/movies');
+router.post('/');
 
-router.delete('/movies/:id');
+router.delete('/:id');
 
 module.exports = router;

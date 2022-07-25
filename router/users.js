@@ -1,10 +1,10 @@
 const express = require('express');
-const { getUser, updateUser } = require('../controllers/users');
+const { getMe, updateMe } = require('../controllers/users');
 
 const router = express.Router();
 
-router.get('/users/me', getUser);
+router.get('/me', getMe);
 
-router.patch('/users/me', updateUser);
+router.patch('/me', updateMe);
 
 module.exports = router;
