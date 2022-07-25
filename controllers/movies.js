@@ -11,6 +11,8 @@ const getUserMovies = async (req, res, next) => {
 };
 
 const createMovie = (req, res, next) => {
+  const owner = req.user.payload;
+  console.log(owner);
   const {
     country,
     director,
@@ -20,11 +22,11 @@ const createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbNail,
-    movieId,
+    id,
     nameRU,
     nameEN,
   } = req.body;
-  const owner = req.user.payload;
+  console.log(req.body);
   Movie.create({
     country,
     director,
@@ -35,9 +37,9 @@ const createMovie = (req, res, next) => {
     trailerLink,
     thumbNail,
     owner,
-    movieId,
+    id,
     nameRU,
-    nameEn,
+    nameEN,
   })
     .then((movie) => res.status(201).send(movie))
     .catch((error) => next(error));
@@ -53,7 +55,7 @@ const deleteMovie = (req, res, next) => {
         throw new Error();
       }
       return movie.remove()
-        .then((movie) => res.status(200).send({ message: `${movie} удален` }))
+        .then((removedMovie) => res.status(200).send({ message: `${removedMovie} удален` }))
         .catch((error) => next(error));
     })
     .catch((error) => next(error));

@@ -6,19 +6,19 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   email: {
-    type: 'string',
+    type: String,
     required: true,
     unique: true,
     validate: [validator.isEmail],
   },
   password: {
-    type: 'string',
+    type: String,
     required: true,
     select: false,
     minlength: 8,
   },
   name: {
-    type: 'string',
+    type: String,
     required: true,
     minlength: 2,
     maxlength: 30,
