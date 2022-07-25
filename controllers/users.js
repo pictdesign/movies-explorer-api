@@ -1,13 +1,16 @@
 const bcrypt = require('bcryptjs');
 const { generateToken } = require('../helpers/jwt');
 const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
+const DuplicateError = require('../errors/DuplicateError');
 
 const getMe = async (req, res, next) => {
   const userId = req.user.payload;
   try {
     const user = await User.findById(userId);
     if (!user) {
-      throw new Error();
+      throw new NotFoundError('Пользователь не найден');
     }
     res.status(200).send(user);
   } catch (error) {
@@ -27,7 +30,7 @@ const updateMe = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (!user) {
-      throw new Error();
+      throw new BadRequestError();
     }
     res.status(200).send({
       email: user.email,
@@ -45,10 +48,10 @@ const createUser = async (req, res, next) => {
   try {
     const foundUser = await User.findOne({ email });
     if (foundUser) {
-      throw new Error();
+      throw new DuplicateError();
     }
     if (!email || !password || !name) {
-      throw new Error();
+      throw new BadRequestError();
     }
     const hashPassword = await bcrypt.hash(password, 10);
     const createdUser = await User.create({
@@ -76,7 +79,7 @@ const login = (req, res, next) => {
     email, password,
   } = req.body;
   if (!email || !password) {
-    throw new Error();
+    throw new BadRequestError();
   }
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -101,8 +104,8 @@ const logout = (req, res, next) => {
       .status(200)
       .clearCookie('jwt')
       .send({ message: 'Возвращайтесь как можно скорее' });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 

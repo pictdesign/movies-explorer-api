@@ -1,4 +1,6 @@
 const Movie = require('../models/movie');
+const NotFoundError = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 const getUserMovies = async (req, res, next) => {
   const userId = req.user.payload;
@@ -47,10 +49,10 @@ const deleteMovie = async (req, res, next) => {
   Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
-        throw new Error();
+        throw new NotFoundError('Фильм не найден');
       }
       if (movie.owner._id.toString() !== req.user.payload) {
-        throw new Error();
+        throw new ForbiddenError();
       }
       return movie.remove()
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
