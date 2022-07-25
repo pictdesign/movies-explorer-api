@@ -18,7 +18,7 @@ const getMe = async (req, res, next) => {
 const updateMe = async (req, res, next) => {
   const userId = req.user.payload;
   const {
-    email, name
+    email, name,
   } = req.body;
   try {
     const user = await User.findByIdAndUpdate(
