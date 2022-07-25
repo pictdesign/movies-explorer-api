@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const DuplicateError = require('../errors/DuplicateError');
+const AuthorizationError = require('../errors/AuthorizationError');
 
 const getMe = async (req, res, next) => {
   const userId = req.user.payload;
@@ -95,7 +96,7 @@ const login = (req, res, next) => {
           name: user.name,
         });
     })
-    .catch((error) => next(error));
+    .catch((error) => next(new AuthorizationError()));
 };
 
 const logout = (req, res, next) => {
