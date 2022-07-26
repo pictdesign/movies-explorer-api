@@ -96,7 +96,7 @@ const login = (req, res, next) => {
           name: user.name,
         });
     })
-    .catch((error) => next(new AuthorizationError()));
+    .catch(() => next(new AuthorizationError()));
 };
 
 const logout = (req, res, next) => {
