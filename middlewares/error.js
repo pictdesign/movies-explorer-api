@@ -1,8 +1,6 @@
 const Error = (err, req, res, next) => {
-  const { statusCode, message } = err;
-  if (statusCode) {
-    res.status(statusCode).send({ message });
-  }
+  const { statusCode = 500, message = 'Ошибка сервера, попробуйте позже' } = err;
+  res.status(statusCode).send({ message });
   next();
 };
 

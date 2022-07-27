@@ -38,6 +38,9 @@ const updateMe = async (req, res, next) => {
       name: user.name,
     });
   } catch (error) {
+    if (error.code === 11000) {
+      next(new DuplicateError());
+    }
     next(error);
   }
 };
@@ -79,9 +82,6 @@ const login = (req, res, next) => {
   const {
     email, password,
   } = req.body;
-  if (!email || !password) {
-    throw new BadRequestError();
-  }
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = generateToken(user.id);

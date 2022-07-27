@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -18,10 +19,10 @@ mongoose.connect(DATABASE, {
 });
 
 app.use(helmet());
+app.use(requestLogger);
 app.use(rateLimiter);
 app.use(cors);
 app.use(cookieParser());
-app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

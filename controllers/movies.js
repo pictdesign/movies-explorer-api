@@ -42,7 +42,7 @@ const createMovie = (req, res, next) => {
     nameEN,
   })
     .then((movie) => res.status(201).send(movie))
-    .catch((error) => next(error));
+    .catch(next);
 };
 
 const deleteMovie = async (req, res, next) => {
@@ -58,7 +58,7 @@ const deleteMovie = async (req, res, next) => {
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
         .catch((error) => next(error));
     })
-    .catch((error) => next(error));
+    .catch(next);
 };
 
 module.exports = {
